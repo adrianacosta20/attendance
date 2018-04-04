@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
 // define the schema for our user model
-var userSchema = mongoose.Schema({
+var studentsSchema = mongoose.Schema({
   email: { type: String, lowercase: true, trim: true },
   password: String,
   name: { type: String, trim: true },
@@ -14,19 +14,19 @@ var userSchema = mongoose.Schema({
 });
 
 // generating a hash
-userSchema.methods.generateHash = function (password) {
+studentsSchema.methods.generateHash = function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
   };
   
   // checking if password is valid
-  userSchema.methods.validPassword = function (password) {
+  studentsSchema.methods.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
   };
   
   // checking email confirmation
-  userSchema.methods.isEmailConfirmed = function () {
+  studentsSchema.methods.isEmailConfirmed = function () {
     return this.emailConfirmed;
   };
   
   // create the model and expose it to our app
-  module.exports = mongoose.model('User', userSchema);
+  module.exports = mongoose.model('Students', studentsSchema);
